@@ -3,6 +3,7 @@ package in.konarkinteriors.app.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -16,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,6 +57,11 @@ public class ServiceRequestController {
 	@RequestMapping(value = "/requests/all", method = RequestMethod.GET)
 	public List<ServiceRequest> getAllRequests() {
 		return serviceRequestsRepository.findAll();
+	}
+
+	@RequestMapping(value = "/request/{id}", method = RequestMethod.GET)
+	public Optional<ServiceRequest> getRequestById(@PathVariable Integer id) {
+		return serviceRequestsRepository.findById(id);
 	}
 
 	private void sendmail(ServiceRequest serviceRequest) throws AddressException, MessagingException, IOException {
